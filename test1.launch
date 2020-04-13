@@ -1,0 +1,43 @@
+<!--This launch file controls the plane to be level. -->
+<launch>
+ <arg name="mav_name"  default="MTD"/>
+ <rosparam command="load" file="MTD.yaml" ns="controller"/>
+ <node name="rosflight_io"  pkg="rosflight"  type="rosflight_io" output="screen">
+	<param name="port" value="/dev/ttyACM0"/>
+ </node>
+ <node name="uINS" pkg="inertial_sense" type="inertial_sense_node" output="screen">
+  <param name="~port" value="/dev/uINS"/>
+
+  <!-- WEBSTER FIELD -->
+  <!--
+	<param name="~lat_ref" value="38.144692"/>
+	<param name="~lon_ref" value="-76.428007"/>
+	<param name="~h_ref" value="0.0"/>
+  -->
+
+	<!-- Helwig Field Big, MD -->
+	<!--
+	<param name="~lat_ref" value="38.367192"/>
+	<param name="~lon_ref" value="-76.523419"/>
+	<param name="~h_ref" value="0.0"/>
+	-->
+	<!-- Helwig Field Small, MD -->
+	<!--
+	<param name="~lat_ref" value="38.3649293"/>
+	<param name="~lon_ref" value="-76.5366214"/>
+	<param name="~h_ref" value="0.0"/>
+	-->
+	<!-- Kawasaki field -->
+	<param name="~lat_ref" value="40.174571"/>
+	<param name="~lon_ref" value="-111.651641"/>
+	<param name="~h_ref" value="1395"/>
+
+ </node>
+
+ <node name="estimator" pkg="rosplane" type="rosplane_estimator" output="screen">
+	<param name="~use_inertial_sense" type="bool" value="true"/>
+ </node>
+
+ <node name="controller" pkg="rosplane" type="rosplane_controller" output="screen">
+ </node>
+</launch>
